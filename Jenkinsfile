@@ -35,10 +35,12 @@ node {
       
 	stage('Sonar') {
 		 withSonarQubeEnv('Sonar') {
-			if(isUnix()) {
- 				sh "mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=carobee_twitter-api" 
-			} else { 
- 				bat "mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=carobee_twitter-api" 
+			 withMaven(maven: 'maven') {
+				if(isUnix()) {
+	 				sh "mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=carobee_twitter-api" 
+				} else { 
+	 				bat "mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=carobee_twitter-api" 
+				} 
 			} 
 		}
 	} 
